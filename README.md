@@ -28,11 +28,18 @@ aoc_2024/
 ├── src/                    # Source code (professional Python project structure)
 │   └── aoc2024/            # Main package
 │       ├── __init__.py     # Package initialization
+│       ├── day01/          # Day 1 solutions
+│       │   ├── __init__.py # Day 1 package initialization
+│       │   └── day01.py    # Day 1 solution code
 │       └── utils/          # Shared utility functions
 │           └── __init__.py # Common file operations, helper functions
 ├── tests/                  # Test files for solutions
-│   └── __init__.py         # Test package initialization
+│   ├── __init__.py         # Test package initialization
+│   └── day01/              # Day 1 tests
+│       ├── __init__.py     # Day 1 test package initialization
+│       └── test_day01.py   # Day 1 test cases
 ├── venv/                   # Python virtual environment
+├── .gitignore              # Git ignore rules for Python projects
 ├── pyproject.toml          # Modern Python project configuration
 ├── requirements.txt        # Python dependencies
 └── README.md              # This file
@@ -49,16 +56,14 @@ aoc_2024/
 
 1. **Clone and Navigate to Project**
    ```bash
+   git clone your-repo
    cd aoc_2024
    ```
 
 2. **Activate Virtual Environment**
    ```bash
-   # On macOS/Linux:
+   python -m venv venv
    source venv/bin/activate
-   
-   # On Windows:
-   venv\Scripts\activate
    ```
 
 3. **Install Package in Editable Mode (Essential!)**
@@ -69,14 +74,9 @@ aoc_2024/
 
 > **⚠️ Important:** This is crucial! Without it, Python won't be able to import your `aoc2024` package, and your tests won't work. The `-e` flag installs the package in "editable" mode, so changes to your code are immediately available without reinstalling.   
 
-4. **Install Development Dependencies**
+4. **Install Dependencies**
    ```bash
-   # Install testing, linting, and formatting tools
-   pip install -e ".[dev]"
-   ```
-   
-   Or install basic requirements if available:
-   ```bash
+   # Install external dependencies (pytest, etc.)
    pip install -r requirements.txt
    ```
    
@@ -91,8 +91,9 @@ aoc_2024/
    # Test that Python can import your package (this verifies the editable install worked)
    python -c "from aoc2024.utils import read_input; print('Setup working!')"
    
-   # Verify pytest can find your tests
+   # Verify pytest can find and run your tests
    pytest --collect-only
+   pytest tests/ -v
    ```
 
 ## 💻 Development Workflow
