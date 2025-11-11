@@ -1,0 +1,7 @@
+# This is a placeholder input file for Day 1
+# Replace with actual input when Day 1 is released
+1
+2
+3
+4
+5
