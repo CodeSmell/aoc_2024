@@ -61,14 +61,23 @@ aoc_2024/
    venv\Scripts\activate
    ```
 
-3. **Install Dependencies**
+3. **Install Package in Editable Mode (Essential!)**
    ```bash
-   pip install -r requirements.txt
+   # This allows imports like 'from aoc2024.day01.day01 import distance' to work
+   pip install -e .
+   ```
+
+> **⚠️ Important:** This is crucial! Without it, Python won't be able to import your `aoc2024` package, and your tests won't work. The `-e` flag installs the package in "editable" mode, so changes to your code are immediately available without reinstalling.   
+
+4. **Install Development Dependencies**
+   ```bash
+   # Install testing, linting, and formatting tools
+   pip install -e ".[dev]"
    ```
    
-   For development dependencies (testing, linting, formatting):
+   Or install basic requirements if available:
    ```bash
-   pip install -e ".[dev]"  # Install package in editable mode with dev dependencies
+   pip install -r requirements.txt
    ```
    
    If you need to add new packages for solutions:
@@ -77,16 +86,13 @@ aoc_2024/
    pip freeze > requirements.txt  # Update requirements file
    ```
 
-4. **Install Package in Development Mode**
-   ```bash
-   # Install the aoc2024 package in editable mode
-   pip install -e .
-   ```
-
 5. **Verify Setup**
    ```bash
-   # Test that Python can import your package
+   # Test that Python can import your package (this verifies the editable install worked)
    python -c "from aoc2024.utils import read_input; print('Setup working!')"
+   
+   # Verify pytest can find your tests
+   pytest --collect-only
    ```
 
 ## 💻 Development Workflow
