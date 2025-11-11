@@ -25,13 +25,15 @@ aoc_2024/
 │   └── day01.txt           # Example: Day 1 input data
 ├── notebooks/              # Jupyter notebooks for exploration and experimentation
 │   └── day01_exploration.ipynb  # Interactive problem-solving workspace
-├── solutions/              # Python solution modules
-│   ├── __init__.py         # Package initialization
-│   └── utils/              # Shared utility functions
-│       └── __init__.py     # Common file operations, helper functions
+├── src/                    # Source code (professional Python project structure)
+│   └── aoc2024/            # Main package
+│       ├── __init__.py     # Package initialization
+│       └── utils/          # Shared utility functions
+│           └── __init__.py # Common file operations, helper functions
 ├── tests/                  # Test files for solutions
 │   └── __init__.py         # Test package initialization
 ├── venv/                   # Python virtual environment
+├── pyproject.toml          # Modern Python project configuration
 ├── requirements.txt        # Python dependencies
 └── README.md              # This file
 ```
@@ -64,16 +66,27 @@ aoc_2024/
    pip install -r requirements.txt
    ```
    
+   For development dependencies (testing, linting, formatting):
+   ```bash
+   pip install -e ".[dev]"  # Install package in editable mode with dev dependencies
+   ```
+   
    If you need to add new packages for solutions:
    ```bash
    pip install package_name
    pip freeze > requirements.txt  # Update requirements file
    ```
 
-4. **Verify Setup**
+4. **Install Package in Development Mode**
    ```bash
-   # Test that Python can import your solutions
-   python -c "from solutions.utils import read_input; print('Setup working!')"
+   # Install the aoc2024 package in editable mode
+   pip install -e .
+   ```
+
+5. **Verify Setup**
+   ```bash
+   # Test that Python can import your package
+   python -c "from aoc2024.utils import read_input; print('Setup working!')"
    ```
 
 ## 💻 Development Workflow
@@ -87,8 +100,8 @@ aoc_2024/
    - Prototype solutions interactively
 
 2. **Implement Clean Solution**
-   - Create `solutions/dayXX.py`
-   - Use utility functions from `solutions/utils/`
+   - Create `src/aoc2024/dayXX.py`
+   - Use utility functions from `aoc2024.utils`
    - Write clear, documented code
 
 3. **Write Tests**
@@ -99,23 +112,32 @@ aoc_2024/
 4. **Run and Validate**
    ```bash
    # Run specific day's solution
-   python solutions/dayXX.py
+   python -m aoc2024.dayXX
+   
+   # Or run directly if executable
+   python src/aoc2024/dayXX.py
    
    # Run tests
    pytest tests/test_dayXX.py
    
    # Run all tests
    pytest
+   
+   # Run with coverage
+   pytest --cov=aoc2024
    ```
 
 ## 🛠️ Development Tools Configured
 
 - **Python Interpreter**: Project virtual environment
+- **Package Management**: Modern pyproject.toml configuration
 - **Linting**: Flake8 for code quality
 - **Formatting**: Black for consistent code style
-- **Testing**: pytest for unit testing
+- **Type Checking**: MyPy for static type analysis
+- **Testing**: pytest for unit testing with coverage
 - **Notebooks**: Jupyter for interactive exploration
 - **VS Code**: Optimized settings for Python development
+- **Editable Install**: Package installed in development mode
 
 ## 📚 Learning Resources
 
@@ -158,7 +180,7 @@ def part_two(input_data: str) -> int:
     pass
 
 if __name__ == "__main__":
-    from utils import read_input
+    from aoc2024.utils import read_input
     
     data = read_input("inputs/dayXX.txt")
     
