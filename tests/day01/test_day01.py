@@ -3,13 +3,10 @@ Tests for Advent of Code 2024 - Day 1: Historian Hysteria
 """
 
 import pytest
-from aoc2024.day01.day01 import (
-    distance, read_day01_input
-)
+from aoc2024.day01.day01 import distance, read_day01_input
+
 
 class TestDistance:
-    """Test cases for the distance function."""
-
     def test_distance_positive_numbers(self):
         """Test distance calculation with positive numbers."""
         assert distance(3, 7) == 4
@@ -49,9 +46,8 @@ class TestDistance:
         assert distance(1000000, 2000000) == 1000000
         assert distance(-1000000, 1000000) == 2000000
 
-class TestReadDay01Input:
-    """Test cases for the read_day01_input function."""
 
+class TestReadDay01Input:
     def test_read_day01_input_valid_file(self, tmp_path):
         left, right = read_day01_input("inputs/day01.sample.txt")
 
@@ -89,11 +85,62 @@ class TestReadDay01Input:
         assert right == [4, 8]
 
 
-# Example of how to add more test classes for other functions
-# class TestPartOne:
-#     """Test cases for part_one function."""
-#     pass
-#
-# class TestPartTwo:
-#     """Test cases for part_two function."""
-#     pass
+class TestPairAndSumDistances:
+    def test_pair_and_sum_distances_basic(self):
+        """Test basic pairing and sum of distances."""
+        left = [3, 4, 2, 1, 3, 3]
+        right = [4, 3, 5, 3, 9, 3]
+
+        result = pair_and_sum_distances(left, right)
+
+        assert result == 11
+
+    def test_pair_and_sum_distances_empty_lists(self):
+        """Test with empty lists."""
+        left = []
+        right = []
+
+        result = pair_and_sum_distances(left, right)
+
+        assert result == 0
+
+    def test_pair_and_sum_distances_single_element(self):
+        """Test with single element lists."""
+        left = [5]
+        right = [8]
+
+        result = pair_and_sum_distances(left, right)
+
+        assert result == 3
+
+    def test_pair_and_sum_distances_already_sorted(self):
+        """Test with already sorted lists."""
+        left = [1, 2, 3]
+        right = [4, 5, 6]
+
+        result = pair_and_sum_distances(left, right)
+
+        assert result == 9
+
+    def test_pair_and_sum_distances_reverse_sorted(self):
+        """Test with reverse sorted lists."""
+        left = [6, 5, 4]
+        right = [3, 2, 1]
+
+        result = pair_and_sum_distances(left, right)
+
+        assert result == 9
+
+class TestPartOne:
+    def test_part_one_sample_file(self):
+        result = part_one("inputs/day01.sample.txt")
+
+        assert result == 11
+
+    def test_part_one_empty_file(self, tmp_path):
+        test_file = tmp_path / "test_input.txt"
+        test_file.write_text("")
+
+        result = part_one(str(test_file))
+
+        assert result == 0
