@@ -1,0 +1,1 @@
+"""Day 1 module for Advent of Code 2024."""
