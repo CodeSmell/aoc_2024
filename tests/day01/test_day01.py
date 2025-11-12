@@ -3,8 +3,9 @@ Tests for Advent of Code 2024 - Day 1: Historian Hysteria
 """
 
 import pytest
-from aoc2024.day01.day01 import distance, read_day01_input
-
+from aoc2024.day01.day01 import (
+    distance, similarity, read_day01_input, pair_and_sum_distances, part_one, part_two
+)
 
 class TestDistance:
     def test_distance_positive_numbers(self):
@@ -131,9 +132,51 @@ class TestPairAndSumDistances:
 
         assert result == 9
 
+class TestSimilarity:
+    def test_similarity_basic_example(self):
+        left = [3, 4, 2, 1, 3, 3]
+        right = [4, 3, 5, 3, 9, 3]
+
+        result = similarity(left, right)
+
+        assert result == 31
+
+    def test_similarity_empty_lists(self):
+        left = []
+        right = []
+
+        result = similarity(left, right)
+
+        assert result == 0
+
+    def test_similarity_no_matches(self):
+        left = [1, 2, 3]
+        right = [4, 5, 6]
+
+        result = similarity(left, right)
+
+        assert result == 0
+
+    def test_similarity_all_matches(self):
+        left = [1, 2, 3]
+        right = [1, 2, 3]
+
+        result = similarity(left, right)
+
+        assert result == 6
+
+    def test_similarity_zero_in_lists(self):
+        left = [0, 1, 2]
+        right = [0, 0, 1]
+
+        result = similarity(left, right)
+
+        assert result == 1  # 0*2 + 1*1 + 2*0
+
 class TestPartOne:
     def test_part_one_sample_file(self):
-        result = part_one("inputs/day01.sample.txt")
+        left_numbers, right_numbers = read_day01_input("inputs/day01.sample.txt")
+        result = part_one(left_numbers, right_numbers)
 
         assert result == 11
 
@@ -141,6 +184,23 @@ class TestPartOne:
         test_file = tmp_path / "test_input.txt"
         test_file.write_text("")
 
-        result = part_one(str(test_file))
+        left_numbers, right_numbers = read_day01_input(str(test_file))
+        result = part_one(left_numbers, right_numbers)
+
+        assert result == 0
+
+class TestPartTwo:
+    def test_part_two_sample_file(self):
+        left_numbers, right_numbers = read_day01_input("inputs/day01.sample.txt")
+        result = part_two(left_numbers, right_numbers)
+
+        assert result == 31
+
+    def test_part_two_empty_file(self, tmp_path):
+        test_file = tmp_path / "test_input.txt"
+        test_file.write_text("")
+
+        left_numbers, right_numbers = read_day01_input(str(test_file))
+        result = part_two(left_numbers, right_numbers)
 
         assert result == 0
