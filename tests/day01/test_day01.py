@@ -1,7 +1,3 @@
-"""
-Tests for Advent of Code 2024 - Day 1: Historian Hysteria
-"""
-
 import pytest
 from aoc2024.day01.day01 import (
     distance, similarity, read_day01_input, pair_and_sum_distances, part_one, part_two
