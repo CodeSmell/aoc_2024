@@ -6,7 +6,7 @@ you'll need to add up all of those distances.
 For example, 3 and 7 as input give the distance apart as 4; 
 if you pair up a 9 with a 3, the distance apart is 6.
 """
-def distance(point1, point2):
+def distance(point1: int, point2: int) -> int:
     return abs(point2 - point1)
 
 """
@@ -19,7 +19,7 @@ By way of another example:
 if the left list is [3, 4, 2, 3] and the right list is [4,3,5,4]
 then the similarity score is 3*1 + 4*2 + 2*0 + 3*1 = 14
 """
-def similarity(left_numbers, right_numbers):
+def similarity(left_numbers: list[int], right_numbers: list[int]) -> int:
     total_similarity = 0
     for number in left_numbers:
         count_in_right = right_numbers.count(number)
@@ -31,7 +31,7 @@ read the day01 input
 each line in the file contains two integers separated by one or more spaces
 we want two lists: one for the integers are the left and one for the integers on the right
 """
-def read_day01_input(filename):
+def read_day01_input(filename: str) -> tuple[list[int], list[int]]:
     left_numbers = []
     right_numbers = []
 
@@ -49,7 +49,7 @@ def read_day01_input(filename):
 Pair up the smallest number in the left list with the smallest number in the right list, 
 then the second-smallest left number with the second-smallest right number, and so on.
 '''
-def pair_and_sum_distances(left_numbers, right_numbers):
+def pair_and_sum_distances(left_numbers: list[int], right_numbers: list[int]) -> int:
     sorted_left = sorted(left_numbers)
     sorted_right = sorted(right_numbers)
 
@@ -60,11 +60,11 @@ def pair_and_sum_distances(left_numbers, right_numbers):
 
     return total_distance
 
-def part_one(left_numbers, right_numbers):
+def part_one(left_numbers: list[int], right_numbers: list[int]) -> int:
     total_distance = pair_and_sum_distances(left_numbers, right_numbers)
     return total_distance
 
-def part_two(left_numbers, right_numbers):
+def part_two(left_numbers: list[int], right_numbers: list[int]) -> int:
     total_similarity = similarity(left_numbers, right_numbers)
     return total_similarity
 

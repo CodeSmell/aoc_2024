@@ -8,7 +8,6 @@ Keep it simple - add more functions as you need them!
 from pathlib import Path
 from typing import List, Union
 
-
 def read_input(filename: Union[str, Path]) -> str:
     """
     Read a file and return its contents as a string.

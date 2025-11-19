@@ -1,10 +1,10 @@
 from aoc2024.utils.file_io import read_lines
 
-def is_safe_range(level1, level2):
+def is_safe_range(level1: int, level2: int) -> bool:
     return 1 <= abs(level1 - level2) <= 3
 
 # a safe report with toleration for one bad level
-def is_safe_report_toleration(levels):
+def is_safe_report_toleration(levels: list[int]) -> bool:
     is_safe = is_safe_report(levels)
 
     if not is_safe:
@@ -19,7 +19,7 @@ def is_safe_report_toleration(levels):
 
 # Define a function to check if a range is safe
 # a report is safe if the levels are either all increasing or all decreasing.
-def is_safe_report(levels):
+def is_safe_report(levels: list[int]) -> bool:
     # A report with less than 2 levels is trivially safe
     if len(levels) < 2:
         return True
@@ -49,7 +49,7 @@ def is_safe_report(levels):
     return is_safe
 
 # tolerate a single bad level 
-def part_two(reports):
+def part_two(reports: list[str]) -> int:
     safe_count = 0
     for report in reports:
         levels = list(map(int, report.split()))
@@ -58,7 +58,7 @@ def part_two(reports):
     return safe_count
 
 # find the safe reports
-def part_one(reports):
+def part_one(reports: list[str]) -> int:
     safe_count = 0
     for report in reports:
         levels = list(map(int, report.split()))
