@@ -1,0 +1,2 @@
+# Day 04 sample input will go here
+# TODO: Add sample input when problem is released

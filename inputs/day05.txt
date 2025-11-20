@@ -1,0 +1,2 @@
+# Day 05 actual input will go here
+# TODO: Add actual input when problem is released
