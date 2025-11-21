@@ -5,8 +5,6 @@ from aoc2024.utils import read_input
 # or even overlapping other words
 #
 
-WORD_TO_FIND = "XMAS"
-
 # once a line is isolated look for the word in both directions
 def count_word_in_line(line: str, word: str) -> int:
     count = 0
@@ -85,26 +83,75 @@ def get_diagonals(lines: list[str]) -> list[str]:
     
     return diagonals
 
+# AI generated cross word finder (several iterations to optimize and make readable)
+def count_crossing_word(rows, word):
+    count = 0
+    if not rows or not rows[0]:
+        return count
+
+    num_rows = len(rows)
+    num_columns = len(rows[0]) if num_rows > 0 else 0
+    word_length = len(word)
+    half_word_length = (word_length // 2)
+
+    def diagonal_at(center_row, center_col, row_direction, col_direction):
+        """
+        Extracts a diagonal word centered at (center_row, center_col).
+        
+        Args:
+            center_row: Row index of the center position
+            center_col: Column index of the center position  
+            row_direction: 1 for down, -1 for up
+            col_direction: 1 for right, -1 for left
+            
+        Returns:
+            String representing the diagonal word
+        """
+        diagonal_chars = []
+        
+        # Start from the beginning of the word (half_word_length positions back from center)
+        start_row = center_row - half_word_length * row_direction
+        start_col = center_col - half_word_length * col_direction
+        
+        # Extract each character of the word
+        for i in range(word_length):
+            current_row = start_row + i * row_direction
+            current_col = start_col + i * col_direction
+            diagonal_chars.append(rows[current_row][current_col])
+            
+        return ''.join(diagonal_chars)
+
+    count = 0
+    for r in range(half_word_length, num_rows - half_word_length):
+        for c in range(half_word_length, num_columns - half_word_length):
+            diag1 = diagonal_at(r, c, 1, 1)   # ↘
+            diag2 = diagonal_at(r, c, 1, -1)  # ↙
+            if ((diag1 == word or diag1 == word[::-1]) and
+                (diag2 == word or diag2 == word[::-1])):
+                count += 1
+    return count
+
 def part_one(data: str) -> int:
+    word_to_find = "XMAS"
     count = 0
     rows = data.splitlines()
     # rows
-    count += search_lines(rows, WORD_TO_FIND)
+    count += search_lines(rows, word_to_find)
     # columns
     columns = get_columns(rows)
-    count += search_lines(columns, WORD_TO_FIND)
+    count += search_lines(columns, word_to_find)
     #diagonals
     diagonals = get_diagonals(rows)
-    count += search_lines(diagonals, WORD_TO_FIND)
+    count += search_lines(diagonals, word_to_find)
     return count
 
 def part_two(data: str) -> int:
-    pass
+    return count_crossing_word(data.splitlines(), "MAS")
 
 if __name__ == "__main__":
     data = read_input("inputs/day04.txt")
-    result_part1 = part_one(data)
-    print(f"Part 1: {result_part1}")
+    # result_part1 = part_one(data)
+    # print(f"Part 1: {result_part1}")
     
-    # result_part2 = part_two(data)
-    # print(f"Part 2: {result_part2}")
+    result_part2 = part_two(data)
+    print(f"Part 2: {result_part2}")

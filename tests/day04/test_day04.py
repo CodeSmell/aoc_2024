@@ -2,7 +2,9 @@ import pytest
 from aoc2024.day04.day04 import (
     count_word_in_line, search_lines, 
     get_columns, get_diagonals,
-    part_one, part_two
+    part_one, 
+    count_crossing_word,
+    part_two
 )
 
 day04_test_data = """MMMSXXMASM
@@ -97,39 +99,6 @@ class TestSearchLines:
         assert search_lines(lines, "XMAS") == 0
 
 
-class TestSampleData:
-    def test_foo_grid(self):
-        rows = [
-            "FOOO",
-            "OOOF",
-            "OFOF"
-        ]
-        expected_columns = ["FOO", "OOF", "OOO", "OFF"]
-        columns = get_columns(rows)
-        assert columns == expected_columns
-
-        expected_diagonals = ['FOO', 'OF', 'O', 'OOF', 'OF', 'O', 'OOF', 'FO', 'F', 'OOO', 'OO', 'F']
-        diagonals = get_diagonals(rows)
-        assert diagonals == expected_diagonals
-
-        assert search_lines(rows, "FOO") == 2
-        assert search_lines(columns, "FOO") == 2
-        assert search_lines(diagonals, "FOO") == 3
-
-    def test_get_rows_test_data(self):
-        rows = day04_test_data.splitlines()
-        assert(search_lines(rows, "XMAS")) == 5
-
-    def test_get_columns_test_data(self):
-        rows = day04_test_data.splitlines()
-        columns = get_columns(rows)
-        assert(search_lines(columns, "XMAS")) == 3
-
-    def test_get_diagonals_test_data(self):
-        rows = day04_test_data.splitlines()
-        diagonals = get_diagonals(rows)
-        assert search_lines(diagonals, "XMAS") == 10
-
 class TestGetColumns:
     def test_get_columns_square_grid(self):
         rows = [
@@ -218,3 +187,49 @@ class TestGetDiagonals:
         rows = []
         result = get_diagonals(rows)
         assert result == []
+
+class TestFoo:
+    rows = [
+        "FOOO",
+        "OOOF",
+        "OFOF"
+    ]
+
+    word_to_find = "FOO"
+
+    def test_foo_grid_part1(self):
+        expected_columns = ["FOO", "OOF", "OOO", "OFF"]
+        columns = get_columns(self.rows)
+        assert columns == expected_columns
+
+        expected_diagonals = ['FOO', 'OF', 'O', 'OOF', 'OF', 'O', 'OOF', 'FO', 'F', 'OOO', 'OO', 'F']
+        diagonals = get_diagonals(self.rows)
+        assert diagonals == expected_diagonals
+
+        assert search_lines(self.rows, self.word_to_find) == 2
+        assert search_lines(columns, self.word_to_find) == 2
+        assert search_lines(diagonals, self.word_to_find) == 3
+
+    def test_foo_grid_part2(self):
+        # find crossing FOO
+        assert(count_crossing_word(self.rows, self.word_to_find)) == 1
+
+class TestSampleDataPart1:
+    def test_get_rows_test_data(self):
+        rows = day04_test_data.splitlines()
+        assert(search_lines(rows, "XMAS")) == 5
+
+    def test_get_columns_test_data(self):
+        rows = day04_test_data.splitlines()
+        columns = get_columns(rows)
+        assert(search_lines(columns, "XMAS")) == 3
+
+    def test_get_diagonals_test_data(self):
+        rows = day04_test_data.splitlines()
+        diagonals = get_diagonals(rows)
+        assert search_lines(diagonals, "XMAS") == 10
+
+class TestSampleDataPart2:
+    def test_crossing_word_test_data(self):
+        rows = day04_test_data.splitlines()
+        assert(count_crossing_word(rows, "MAS")) == 9
